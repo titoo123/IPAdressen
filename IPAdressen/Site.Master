@@ -1,0 +1,73 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="IPAdressen.SiteMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+<style type="text/css">
+        input
+        {
+            width: 350px;
+            height:28px;
+        margin-left: 0px;
+    }
+ 
+       
+    </style>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server">
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>
+                    IP-Datenbank
+                </h1>
+            </div>
+            <div class="loginDisplay">
+                <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false" 
+                    onviewchanged="HeadLoginView_ViewChanged">
+                   <%-- <AnonymousTemplate>
+                        [ <a href="~/Account/Login.aspx" ID="HeadLoginStatus" runat="server">Anmelden</a> ]
+                    </AnonymousTemplate>--%>
+                    <AnonymousTemplate>
+                        
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        Willkommen <span class="bold"><asp:LoginName ID="HeadLoginName" runat="server" /></span>!
+                        <%--<asp:Button ID="Button_Logout" runat="server" Text="Abmelden" Width="80px" OnClick="Button_Logout_Click" />--%>
+                        <%--[ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect"  LogoutText="Abmelden" LogoutPageUrl="~/"/> ]--%>
+                    </LoggedInTemplate>
+                </asp:LoginView>
+                <asp:LinkButton ID="lnkSignOut" runat="server" Text="Logout" onclick="Logout_Click"></asp:LinkButton>
+            </div>
+            <div class="clear hideSkiplink">
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" 
+                    EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal" 
+                    onmenuitemclick="NavigationMenu_MenuItemClick">
+                   <Items>
+                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Startseite"/>
+                        
+
+                    </Items>
+                </asp:Menu>
+            </div>
+        </div>
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="footer">
+        
+    </div>
+    </form>
+</body>
+</html>

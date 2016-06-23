@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="IP-AdressenDB" Class="DBaseDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=HES-EDV-10;Initial Catalog=IP-AdressenDB;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="IP_AdressenDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Geräte" Member="Geräte">
+    <Type Name="Geräte">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Art" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="Typ" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Standort" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="AlteIP" Type="System.String" DbType="NChar(25)" CanBeNull="true" />
+      <Column Name="VNC_Port" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="VNC_Passwort" Type="System.String" DbType="NChar(30)" CanBeNull="true" />
+      <Column Name="Kommentar" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Column Name="Id_Bereich" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Geräte_BenutzerGeräte" Member="BenutzerGeräte" ThisKey="Id" OtherKey="Id_Gerät" Type="BenutzerGeräte" />
+      <Association Name="Geräte_Adressen" Member="Adressen" ThisKey="Id" OtherKey="Id_Geräte" Type="Adressen" />
+      <Association Name="Bereiche_Geräte" Member="Bereiche" ThisKey="Id_Bereich" OtherKey="Id" Type="Bereiche" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BenutzerAnwendung" Member="BenutzerAnwendung">
+    <Type Name="BenutzerAnwendung">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id_Benutzer" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Id_Anwendung" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Anwendungen_BenutzerAnwendung" Member="Anwendungen" ThisKey="Id_Anwendung" OtherKey="Id" Type="Anwendungen" IsForeignKey="true" />
+      <Association Name="Benutzer_BenutzerAnwendung" Member="Benutzer" ThisKey="Id_Benutzer" OtherKey="Id" Type="Benutzer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Anwendungen" Member="Anwendungen">
+    <Type Name="Anwendungen">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="Login" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="Passwort" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Association Name="Anwendungen_BenutzerAnwendung" Member="BenutzerAnwendung" ThisKey="Id" OtherKey="Id_Anwendung" Type="BenutzerAnwendung" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Benutzer" Member="Benutzer">
+    <Type Name="Benutzer">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Anrede" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Vorname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Internet" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="Benutzer_BenutzerAnwendung" Member="BenutzerAnwendung" ThisKey="Id" OtherKey="Id_Benutzer" Type="BenutzerAnwendung" />
+      <Association Name="Benutzer_BenutzerGeräte" Member="BenutzerGeräte" ThisKey="Id" OtherKey="Id_Benutzer" Type="BenutzerGeräte" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BenutzerGeräte" Member="BenutzerGeräte">
+    <Type Name="BenutzerGeräte">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id_Gerät" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Id_Benutzer" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Ansprechpartner" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Benutzer_BenutzerGeräte" Member="Benutzer" ThisKey="Id_Benutzer" OtherKey="Id" Type="Benutzer" IsForeignKey="true" />
+      <Association Name="Geräte_BenutzerGeräte" Member="Geräte" ThisKey="Id_Gerät" OtherKey="Id" Type="Geräte" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[User]" Member="User">
+    <Type Name="User">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Rechte" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Distrikt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Bereiche_User" Member="Bereiche" ThisKey="Distrikt" OtherKey="Id" Type="Bereiche" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Bereiche" Member="Bereiche">
+    <Type Name="Bereiche">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="IP_Bereich3" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="IP_Bereich2" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="IP_Bereich1" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Association Name="Bereiche_Geräte" Member="Geräte" ThisKey="Id" OtherKey="Id_Bereich" Type="Geräte" />
+      <Association Name="Bereiche_User" Member="User" ThisKey="Id" OtherKey="Distrikt" Type="User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AS400Benutzer" Member="AS400Benutzer">
+    <Type Name="AS400Benutzer">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Kennung" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Passwort" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Bemerkung" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="AS400Benutzer_AS400" Member="AS400" ThisKey="Id" OtherKey="Id_Benutzer" Type="AS400" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Adressen" Member="Adressen">
+    <Type Name="Adressen">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MAC" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Id_Geräte" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Adb1" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="Adb2" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="Adb3" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="Adb4" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="Adb5" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Association Name="Adressen_AS400Adressen" Member="AS400Adressen" ThisKey="Id" OtherKey="Id_Adressen" Type="AS400Adressen" />
+      <Association Name="Geräte_Adressen" Member="Geräte" ThisKey="Id_Geräte" OtherKey="Id" Type="Geräte" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AS400Adressen" Member="AS400Adressen">
+    <Type Name="AS400Adressen">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id_AS400Geräte" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Id_Adressen" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Adressen_AS400Adressen" Member="Adressen" ThisKey="Id_Adressen" OtherKey="Id" Type="Adressen" IsForeignKey="true" />
+      <Association Name="AS400Geräte_AS400Adressen" Member="AS400Geräte" ThisKey="Id_AS400Geräte" OtherKey="Id" Type="AS400Geräte" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AS400Geräte" Member="AS400Geräte">
+    <Type Name="AS400Geräte">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Kennung" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="AS400Geräte_AS400Adressen" Member="AS400Adressen" ThisKey="Id" OtherKey="Id_AS400Geräte" Type="AS400Adressen" />
+      <Association Name="AS400Geräte_AS400" Member="AS400" ThisKey="Id" OtherKey="Id_Geräte" Type="AS400" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AS400" Member="AS400">
+    <Type Name="AS400">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id_Benutzer" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Id_Geräte" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="AS400Benutzer_AS400" Member="AS400Benutzer" ThisKey="Id_Benutzer" OtherKey="Id" Type="AS400Benutzer" IsForeignKey="true" />
+      <Association Name="AS400Geräte_AS400" Member="AS400Geräte" ThisKey="Id_Geräte" OtherKey="Id" Type="AS400Geräte" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
